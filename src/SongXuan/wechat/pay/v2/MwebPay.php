@@ -28,6 +28,7 @@ class MwebPay extends Base {
         $this->mch_id                    = $config['mch_id'];
         $this->mch_secret_cert           = $config['mch_secret_cert'];
         $this->mch_secret_cert_path      = $config['mch_secret_cert_path'];
+        $this->mch_public_cert_path      = $config['mch_public_cert_path'];
 
     }
 
@@ -54,7 +55,7 @@ class MwebPay extends Base {
             'trade_type'       =>'MWEB',
             'sign_type'        =>'HMAC-SHA256',
             //额外参数
-            'attach'           =>$params['attach']
+            'attach'           =>$params['attach'],
         ];
 
         //获取签名

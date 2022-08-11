@@ -27,8 +27,8 @@ class Base{
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         //设置证书
         if($cert == true){
-            curl_setopt($ch,CURLOPT_SSLCERT, $this->cert_path);
-            curl_setopt($ch,CURLOPT_SSLKEY, $this->key_path);
+            curl_setopt($ch,CURLOPT_SSLCERT, $this->mch_secret_cert_path);
+            curl_setopt($ch,CURLOPT_SSLKEY, $this->mch_public_cert_path);
         }
 
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -42,19 +42,13 @@ class Base{
      * 获取签名
      * 加密方式默认使用  sha256
      */
-    public function getSign($data,$type = 'sha256'){
+    public function getSign($data){
 
         ksort($data);
-        $str = $this->ToUrlParams($data);
-        $key = $this->wx_key;
+        $str    = $this->ToUrlParams($data);
+        $key    = $this->mch_secret_cert;
         $string = $str."&key=".$key;
-
-        //加密方式
-        if($type == 'sha256'){
-            $sign = hash_hmac('sha256', $string, $key);
-        }else{
-            $sign = md5($string);
-        }
+        $sign   = hash_hmac('sha256', $string, $key);
         return strtoupper($sign);
     }
 
@@ -64,7 +58,7 @@ class Base{
      */
     public function nonceStr(){
         $result = '';
-        $str = 'QWERTYUIOPASDFGHJKLZXVBNMqwertyuioplkjhgfdsamnbvcxz';
+        $str    = 'QWERTYUIOPASDFGHJKLZXVBNMqwertyuioplkjhgfdsamnbvcxz';
         for ($i = 0;$i < 32;$i++){
             $result .= $str[rand(0,48)];
         }
