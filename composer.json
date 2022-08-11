@@ -1,0 +1,22 @@
+{
+    "name": "songxuan/php-pay",
+    "description": "微信支付，微信小程序、公众号相关接口...",
+    "keywords": [
+        "php"
+    ],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "songxuan",
+            "email": "1668325326@qq.com"
+        }        
+    ],
+    "require": {
+        "php": ">=7.0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "SongXuan\\": "src/SongXuan"
+        }
+    }
+}
