@@ -27,8 +27,8 @@ class Base{
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         //设置证书
         if($cert == true){
-            curl_setopt($ch,CURLOPT_SSLCERT, $this->mch_secret_cert_path);
-            curl_setopt($ch,CURLOPT_SSLKEY, $this->mch_public_cert_path);
+            curl_setopt($ch,CURLOPT_SSLCERT, $this->mch_apiclient_cert);
+            curl_setopt($ch,CURLOPT_SSLKEY, $this->mch_apiclient_key);
         }
 
         curl_setopt($ch, CURLOPT_POST, 1);

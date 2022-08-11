@@ -18,17 +18,17 @@ class MwebPay extends Base {
     //商户秘钥 api秘钥
     public $mch_secret_cert;
     //商户私钥的绝对路径
-    public $mch_secret_cert_path;
+    public $mch_apiclient_cert;
     //商户公钥的绝对路径
-    public $mch_public_cert_path;
+    public $mch_apiclient_key;
 
     public  function __construct($config=[]){
 
         $this->appid                     = $config['appid'];
         $this->mch_id                    = $config['mch_id'];
         $this->mch_secret_cert           = $config['mch_secret_cert'];
-        $this->mch_secret_cert_path      = $config['mch_secret_cert_path'];
-        $this->mch_public_cert_path      = $config['mch_public_cert_path'];
+        $this->mch_apiclient_cert        = $config['mch_apiclient_cert'];
+        $this->mch_apiclient_key         = $config['mch_apiclient_key'];
 
     }
 
