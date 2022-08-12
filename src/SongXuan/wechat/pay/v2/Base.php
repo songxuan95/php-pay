@@ -195,4 +195,15 @@ class Base{
         $xml.="</xml>";
         return $xml;
     }
+
+    /**
+     * 支付成功回调通知 给微信返回
+     */
+    public function returnWx(){
+        $arr['return_code'] = 'SUCCESS';
+        $arr['return_msg'] = 'OK';
+        $xml = $this->arrayToXml($arr);
+        return $xml;
+    }
+
 }

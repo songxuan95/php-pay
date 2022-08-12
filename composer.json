@@ -2,7 +2,9 @@
     "name": "songxuan/php-pay",
     "description": "微信支付，微信小程序、公众号相关接口...",
     "keywords": [
-        "php"
+        "php",
+        "wechat",
+        "pay"
     ],
     "license": "Apache-2.0",
     "authors": [
