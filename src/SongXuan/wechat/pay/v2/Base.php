@@ -10,6 +10,96 @@ namespace SongXuan\wechat\pay\v2;
 
 
 class Base{
+
+    /**
+     * 订单查询
+     * @param  array [out_trade_no]   订单号
+     * @return array
+     */
+    public function order_query($params=[]){
+
+        $data = [
+            'appid'            =>$this->appid,
+            'mch_id'           =>$this->mch_id,
+            'out_trade_no'     =>$params['out_trade_no'],
+            'nonce_str'        =>$this->nonceStr(),
+            'sign_type'        =>'HMAC-SHA256',
+        ];
+
+        $url='https://api.mch.weixin.qq.com/pay/orderquery';
+        return $this->buildData($data,$url,false);
+
+    }
+
+    /**
+     * 退款
+     * @param  array [out_trade_no]    支付订单号
+     * @param  array [out_refund_no]   退款单号
+     * @param  array [total_fee]       支付金额 分
+     * @param  array [notify_url]      退款回调通知
+     * @param  array [refund_desc]     退款原因
+     * @return array
+     */
+    public function refund($params=[]){
+
+        $data = [
+            'appid'            =>$this->appid,
+            'mch_id'           =>$this->mch_id,
+            'out_trade_no'     =>$params['out_trade_no'],
+            'out_refund_no'    =>$params['out_refund_no'],
+            'nonce_str'        =>$this->nonceStr(),
+            'sign_type'        =>'HMAC-SHA256',
+            'total_fee'        =>intval($params['total_fee']),
+            'refund_fee'       =>intval($params['total_fee']),
+        ];
+
+        if(isset($params['refund_desc'])){
+            $data['refund_desc'] = $params['refund_desc'];
+        }
+        if(isset($params['notify_url'])){
+            $data['notify_url'] = $params['notify_url'];
+        }
+        $url='https://api.mch.weixin.qq.com/secapi/pay/refund';
+        return $this->buildData($data,$url,true);
+    }
+
+    /**
+     * 退款查询
+     * @param  array [out_trade_no]   订单号
+     * @return array
+     */
+    public function refund_query($params=[]){
+
+        $data = [
+            'appid'            =>$this->appid,
+            'mch_id'           =>$this->mch_id,
+            'out_trade_no'     =>$params['out_trade_no'],
+            'nonce_str'        =>$this->nonceStr(),
+            'sign_type'        =>'HMAC-SHA256',
+        ];
+
+        $url='https://api.mch.weixin.qq.com/pay/refundquery';
+        return $this->buildData($data,$url,false);
+
+    }
+
+    /**
+     * 数据构建，请求接口
+     * $data  接口参数
+     * $url   接口地址
+     * $pem   是否需要证书
+     */
+    public function buildData($data,$url,$pem){
+        //获取签名
+        $data['sign'] = $this->getSign($data);
+        //转 xml 格式
+        $xml = $this->arrayToXml($data);
+        $result = $this->sendRequest($url,$xml,$pem);
+        // xml 转 数组
+        $arr = $this->xmlToArray($result);
+        return $arr;
+    }
+
     /***
      * $url  微信接口地址
      * $xml  xml 格式数据
