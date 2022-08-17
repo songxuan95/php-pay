@@ -2,17 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2022/8/11
- * Time: 15:14
+ * Date: 2022/8/17
+ * Time: 10:13
  */
 
 namespace SongXuan\wechat\pay\v2;
 
 /**
- * h5支付
+ * 小程序支付
  */
-class MwebPay extends Base {
-    
+class MiniPay extends Base{
     /**
      * @param  array [out_trade_no]      订单号
      * @param  array [spbill_create_ip]  客户端ip
@@ -20,6 +19,7 @@ class MwebPay extends Base {
      * @param  array [notify_url]        回调地址
      * @param  array [body]              描述
      * @param  array [attach]            附加参数，回调处理
+     * @param  array [openid]            用户 openid
      * @return array
      */
     public function pay($params=[]){
@@ -32,11 +32,12 @@ class MwebPay extends Base {
             'spbill_create_ip' =>$params['spbill_create_ip'],
             'total_fee'        =>intval($params['total_fee']),
             'notify_url'       =>$params['notify_url'],
-            'trade_type'       =>'MWEB',
+            'trade_type'       =>'JSAPI',
             'sign_type'        =>'HMAC-SHA256',
+            'openid'           =>$params['openid'],
             'body'             =>$params['body'],
         ];
-
+        
         if(isset($params['attach'])){
             $data['attach'] = $params['attach'];
         }

@@ -11,6 +11,26 @@ namespace SongXuan\wechat\pay\v2;
 
 class Base{
 
+    public  $appid;
+    //商户号
+    public $mch_id;
+    //商户秘钥 api秘钥
+    public $mch_secret_cert;
+    //商户私钥的绝对路径
+    public $mch_apiclient_cert;
+    //商户公钥的绝对路径
+    public $mch_apiclient_key;
+
+    public  function __construct($config=[]){
+
+        $this->appid                     = $config['appid'];
+        $this->mch_id                    = $config['mch_id'];
+        $this->mch_secret_cert           = $config['mch_secret_cert'];
+        $this->mch_apiclient_cert        = $config['mch_apiclient_cert'];
+        $this->mch_apiclient_key         = $config['mch_apiclient_key'];
+
+    }
+
     /**
      * 订单查询
      * @param  array [out_trade_no]   订单号
@@ -82,6 +102,26 @@ class Base{
         return $this->buildData($data,$url,false);
 
     }
+
+    /**
+     * 撤销订单
+     * @param  array [out_trade_no]    支付订单号
+     * @return array
+     */
+    public function reverse($params=[]){
+
+        $data = [
+            'appid'            =>$this->appid,
+            'mch_id'           =>$this->mch_id,
+            'out_trade_no'     =>$params['out_trade_no'],
+            'nonce_str'        =>$this->nonceStr(),
+            'sign_type'        =>'HMAC-SHA256',
+        ];
+
+        $url='https://api.mch.weixin.qq.com/secapi/pay/reverse';
+        return $this->buildData($data,$url,true);
+    }
+
 
     /**
      * 数据构建，请求接口

@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2022/8/11
- * Time: 15:14
+ * Date: 2022/8/17
+ * Time: 11:06
  */
 
 namespace SongXuan\wechat\pay\v2;
 
 /**
- * h5支付
+ * APP 支付
  */
-class MwebPay extends Base {
-    
+class AppPay extends Base{
     /**
+     * @param  array [appid]             app 应用ID
      * @param  array [out_trade_no]      订单号
      * @param  array [spbill_create_ip]  客户端ip
      * @param  array [total_fee]         支付金额 单位 分
@@ -25,14 +25,14 @@ class MwebPay extends Base {
     public function pay($params=[]){
 
         $data = [
-            'appid'            =>$this->appid,
+            'appid'            =>$params['appid'],
             'mch_id'           =>$this->mch_id,
             'nonce_str'        =>$this->nonceStr(),
             'out_trade_no'     =>$params['out_trade_no'],
             'spbill_create_ip' =>$params['spbill_create_ip'],
             'total_fee'        =>intval($params['total_fee']),
             'notify_url'       =>$params['notify_url'],
-            'trade_type'       =>'MWEB',
+            'trade_type'       =>'APP',
             'sign_type'        =>'HMAC-SHA256',
             'body'             =>$params['body'],
         ];

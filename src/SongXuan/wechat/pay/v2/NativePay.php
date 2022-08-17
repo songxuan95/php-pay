@@ -2,17 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2022/8/11
- * Time: 15:14
+ * Date: 2022/8/17
+ * Time: 10:59
  */
 
 namespace SongXuan\wechat\pay\v2;
 
 /**
- * h5支付
+ * Native 支付
  */
-class MwebPay extends Base {
-    
+class NativePay extends Base{
     /**
      * @param  array [out_trade_no]      订单号
      * @param  array [spbill_create_ip]  客户端ip
@@ -32,7 +31,7 @@ class MwebPay extends Base {
             'spbill_create_ip' =>$params['spbill_create_ip'],
             'total_fee'        =>intval($params['total_fee']),
             'notify_url'       =>$params['notify_url'],
-            'trade_type'       =>'MWEB',
+            'trade_type'       =>'NATIVE',
             'sign_type'        =>'HMAC-SHA256',
             'body'             =>$params['body'],
         ];
